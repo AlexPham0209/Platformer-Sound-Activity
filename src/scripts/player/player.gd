@@ -1,5 +1,17 @@
+class_name Player
 extends CharacterBody2D
 
+## Movement Variables
+## 
+## 
+## 
+## 
+## 
+
+@export var speed : float = 250
+@export var acceleration : float = 10
+@export var friction : float = 10
+@export var jump_strength : float = 50
 
 ## Timers
 ##
@@ -10,3 +22,29 @@ extends CharacterBody2D
 ##
 @onready var jump_buffer_timer : Timer = $JumpBufferTimer
 @onready var coyote_jump_timer : Timer = $CoyoteJumpTimer
+
+@export var gravity = Vector2(0, 9.8)
+
+@onready var sprite : Sprite2D = $Sprite2D
+@onready var animation_player : AnimationPlayer = $AnimationPlayer
+
+func _physics_process(delta: float) -> void:
+	#Applying gravity when player is off the floor
+	if not is_on_floor():
+		self.velocity += gravity
+	
+	#Handle sprite flipping
+	var direction = Input.get_axis("left", "right")
+	if direction:
+		sprite.flip_h = direction < 0
+		
+	#If player is on floor, restart Coyote Timer
+	if is_on_floor():
+		coyote_jump_timer.start()
+	
+	#If player presses the jump button, restart the Jump Buffer Timer
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer.start()
+	
+	#Applying velocity on player
+	move_and_slide()

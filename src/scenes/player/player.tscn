@@ -1,8 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://djg8314ex8y7c"]
+[gd_scene load_steps=17 format=3 uid="uid://djg8314ex8y7c"]
 
 [ext_resource type="Script" path="res://src/scripts/player/player.gd" id="1_2f7ho"]
 [ext_resource type="Texture2D" uid="uid://csnmqb30iushq" path="res://src/assets/sunnyland/Player/player.png" id="2_boiwm"]
-[ext_resource type="Script" path="res://src/scripts/states/state_machine.gd" id="3_mj124"]
+[ext_resource type="Script" path="res://src/scripts/states/state_machine.gd" id="3_5rayl"]
+[ext_resource type="Script" path="res://src/scripts/states/state.gd" id="3_80xju"]
+[ext_resource type="Script" path="res://src/scripts/states/player/idle_state.gd" id="4_0yu26"]
+[ext_resource type="Script" path="res://src/scripts/states/player/run_state.gd" id="5_wr7my"]
+[ext_resource type="Script" path="res://src/scripts/states/player/jump_state.gd" id="6_xwnnx"]
+[ext_resource type="Script" path="res://src/scripts/states/player/fall_script.gd" id="7_tn4au"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qlnc"]
 size = Vector2(16, 21)
@@ -20,18 +25,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 5)]
 }
 
 [sub_resource type="Animation" id="Animation_s3ace"]
@@ -129,18 +122,18 @@ _data = {
 "run": SubResource("Animation_2lnyt")
 }
 
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_d3yvt"]
-
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 10
 script = ExtResource("1_2f7ho")
+speed = 200.0
+friction = 25.0
+jump_strength = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -5)
 texture = ExtResource("2_boiwm")
 hframes = 6
 vframes = 6
-frame = 30
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0.5)
@@ -150,15 +143,37 @@ shape = SubResource("RectangleShape2D_4qlnc")
 libraries = {
 "": SubResource("AnimationLibrary_mjo84")
 }
-
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeBlendSpace2D_d3yvt")
-anim_player = NodePath("../AnimationPlayer")
-parameters/blend_position = Vector2(0, 0)
+autoplay = "idle"
 
 [node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
-[node name="StateMachine" type="Node" parent="."]
-script = ExtResource("3_mj124")
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_5rayl")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("4_0yu26")
+player = NodePath("../..")
+
+[node name="Run" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("5_wr7my")
+player = NodePath("../..")
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("6_xwnnx")
+player = NodePath("../..")
+
+[node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("7_tn4au")
+player = NodePath("../..")
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("3_80xju")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
