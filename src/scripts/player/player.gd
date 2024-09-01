@@ -23,16 +23,15 @@ extends CharacterBody2D
 @onready var jump_buffer_timer : Timer = $JumpBufferTimer
 @onready var coyote_jump_timer : Timer = $CoyoteJumpTimer
 
-@export var gravity = Vector2(0, 9.8)
+@export var jump_gravity = Vector2(0, 9.8)
+@export var fall_gravity = Vector2(0, 9.8 * 1.5)
 
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 
+@onready var raycast : RayCast2D = $RayCast2D
+
 func _physics_process(delta: float) -> void:
-	#Applying gravity when player is off the floor
-	if not is_on_floor():
-		self.velocity += gravity
-	
 	#Handle sprite flipping
 	var direction = Input.get_axis("left", "right")
 	if direction:
@@ -48,3 +47,5 @@ func _physics_process(delta: float) -> void:
 	
 	#Applying velocity and collision on player
 	move_and_slide()
+
+	

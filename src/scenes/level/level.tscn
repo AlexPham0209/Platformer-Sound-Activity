@@ -23,6 +23,5 @@ shape = SubResource("RectangleShape2D_w3hxn")
 
 [node name="Player" parent="." instance=ExtResource("2_ia6eg")]
 position = Vector2(25, 134)
-jump_strength = 250.0
 
 [editable path="Player"]

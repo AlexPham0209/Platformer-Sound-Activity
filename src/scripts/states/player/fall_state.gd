@@ -6,6 +6,8 @@ func enter(param : Dictionary = {}) -> void:
 	player.animation_player.play("fall")
 	
 func physics_update(delta : float) -> void:
+	player.velocity += player.fall_gravity
+	
 	var direction = Input.get_axis("left", "right")
 	player.velocity.x = move_toward(player.velocity.x, player.speed * direction, player.acceleration * delta)
 	
