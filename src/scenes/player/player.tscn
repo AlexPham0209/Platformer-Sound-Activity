@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://src/scripts/states/player/idle_state.gd" id="4_0yu26"]
 [ext_resource type="Script" path="res://src/scripts/states/player/run_state.gd" id="5_wr7my"]
 [ext_resource type="Script" path="res://src/scripts/states/player/jump_state.gd" id="6_xwnnx"]
-[ext_resource type="Script" path="res://src/scripts/states/player/fall_script.gd" id="7_tn4au"]
+[ext_resource type="Script" path="res://src/scripts/states/player/fall_state.gd" id="7_tn4au"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qlnc"]
 size = Vector2(16, 21)
@@ -126,7 +126,8 @@ _data = {
 collision_mask = 10
 script = ExtResource("1_2f7ho")
 speed = 200.0
-friction = 25.0
+acceleration = 500.0
+friction = 600.0
 jump_strength = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -176,4 +177,8 @@ player = NodePath("../..")
 [node name="Death" type="Node" parent="StateMachine"]
 script = ExtResource("3_80xju")
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true

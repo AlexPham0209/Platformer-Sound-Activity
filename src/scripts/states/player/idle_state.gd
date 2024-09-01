@@ -9,7 +9,7 @@ func enter(param : Dictionary = {}) -> void:
 	
 func physics_update(delta : float) -> void:
 	#Applies friction to the player, so that they slowly go to a stop
-	player.velocity.x = move_toward(player.velocity.x, 0, player.friction)
+	player.velocity.x = move_toward(player.velocity.x, 0, player.friction * delta)
 	
 	#If left and right keys are pressed, then transition to run state
 	var direction = Input.get_axis("left", "right")

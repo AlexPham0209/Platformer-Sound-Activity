@@ -46,5 +46,5 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer.start()
 	
-	#Applying velocity on player
+	#Applying velocity and collision on player
 	move_and_slide()

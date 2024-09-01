@@ -8,7 +8,7 @@ func enter(param : Dictionary = {}) -> void:
 	
 func physics_update(delta : float) -> void: 
 	var direction : float = Input.get_axis("left", "right")
-	player.velocity.x = move_toward(player.velocity.x, player.speed * direction, player.acceleration)
+	player.velocity.x = move_toward(player.velocity.x, player.speed * direction, player.acceleration * delta)
 	
 	#If player is currently pressing left and right keys, move character, else transition to idle
 	if not direction:
