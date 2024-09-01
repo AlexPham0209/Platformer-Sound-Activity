@@ -3,9 +3,9 @@ extends State
 @export var player : Player
 
 func enter(param : Dictionary = {}) -> void:
-	player.animation_player.play("jump")
 	player.velocity.y = -player.jump_strength
-
+	player.animation_player.play("jump")
+	
 func physics_update(delta : float) -> void:
 	var direction = Input.get_axis("left", "right")
 	player.velocity.x = move_toward(player.velocity.x, player.speed * direction, player.acceleration * delta)
