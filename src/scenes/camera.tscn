@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://btloge7heryw6"]
+
+[ext_resource type="Script" path="res://src/Scripts/camera.gd" id="1_qfdev"]
+
+[node name="Camera2D" type="Camera2D"]
+process_callback = 0
+limit_smoothed = true
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_vertical_offset = -1.0
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+script = ExtResource("1_qfdev")
+
+[node name="TopLeft" type="Marker2D" parent="."]
+
+[node name="BottomRight" type="Marker2D" parent="."]

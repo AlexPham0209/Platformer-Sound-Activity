@@ -29,8 +29,6 @@ extends CharacterBody2D
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 
-@onready var raycast : RayCast2D = $RayCast2D
-
 func _physics_process(delta: float) -> void:
 	#Handle sprite flipping
 	var direction = Input.get_axis("left", "right")

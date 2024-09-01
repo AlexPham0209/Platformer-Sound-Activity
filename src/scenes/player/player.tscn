@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://djg8314ex8y7c"]
+[gd_scene load_steps=18 format=3 uid="uid://djg8314ex8y7c"]
 
 [ext_resource type="Script" path="res://src/scripts/player/player.gd" id="1_2f7ho"]
 [ext_resource type="Texture2D" uid="uid://csnmqb30iushq" path="res://src/assets/sunnyland/Player/player.png" id="2_boiwm"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://src/scripts/states/player/run_state.gd" id="5_wr7my"]
 [ext_resource type="Script" path="res://src/scripts/states/player/jump_state.gd" id="6_xwnnx"]
 [ext_resource type="Script" path="res://src/scripts/states/player/fall_state.gd" id="7_tn4au"]
+[ext_resource type="PackedScene" uid="uid://btloge7heryw6" path="res://src/scenes/camera.tscn" id="9_en4ui"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qlnc"]
 size = Vector2(16, 21)
@@ -178,17 +179,4 @@ player = NodePath("../..")
 [node name="Death" type="Node" parent="StateMachine"]
 script = ExtResource("3_80xju")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-process_callback = 0
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_vertical_offset = -1.0
-drag_left_margin = 0.15
-drag_top_margin = 0.15
-drag_right_margin = 0.15
-drag_bottom_margin = 0.15
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(0, 15)
-collision_mask = 8
+[node name="Camera2D" parent="." instance=ExtResource("9_en4ui")]
