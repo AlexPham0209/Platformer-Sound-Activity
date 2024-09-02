@@ -15,7 +15,10 @@ func physics_update(delta : float) -> void:
 	var direction = Input.get_axis("left", "right")
 	player.velocity.x = move_toward(player.velocity.x, player.speed * direction, player.acceleration * delta)
 	
-	if player.is_on_floor():
+	if not player.coyote_jump_timer.is_stopped() and Input.is_action_just_pressed("jump"):
+		transition_to.emit("Jump")
+		
+	elif player.is_on_floor():
 		if max_fall >= player.landing_velocity:
 			transition_to.emit("Land")
 		else: 

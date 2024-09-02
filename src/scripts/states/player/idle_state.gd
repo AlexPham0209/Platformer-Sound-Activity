@@ -22,9 +22,9 @@ func physics_update(delta : float) -> void:
 		transition_to.emit("Jump")
 	
 	#If player walked off the platform without jumping, transition to fall state
-	if not player.is_on_floor():
+	elif not player.is_on_floor():
 		transition_to.emit("Fall")
 
 func input(event : InputEvent) -> void:
-	if event.is_action_pressed("down") and player.is_on_floor() and player.on_one_way_tile():
+	if event.is_action_pressed("down") and player.on_one_way_tile():
 		player.global_position.y += 1

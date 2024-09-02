@@ -30,6 +30,7 @@ func _input(event):
 func transition_to(state_name : String, param : Dictionary = {}):
 	if not states.has(state_name):
 		return
+
 	current_state.exit()
 	current_state = states[state_name]
 	current_state.enter(param)

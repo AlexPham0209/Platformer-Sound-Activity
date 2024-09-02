@@ -27,7 +27,7 @@ func physics_update(delta : float) -> void:
 		transition_to.emit("Fall")
 
 func input(event : InputEvent) -> void:
-	if event.is_action_pressed("down") and player.is_on_floor() and player.on_one_way_tile():
+	if event.is_action_pressed("down") and player.on_one_way_tile():
 		player.global_position.y += 1
 
 func exit() -> void:
