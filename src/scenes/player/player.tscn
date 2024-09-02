@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://djg8314ex8y7c"]
+[gd_scene load_steps=20 format=3 uid="uid://djg8314ex8y7c"]
 
 [ext_resource type="Script" path="res://src/scripts/player/player.gd" id="1_2f7ho"]
 [ext_resource type="Texture2D" uid="uid://csnmqb30iushq" path="res://src/assets/sunnyland/Player/player.png" id="2_boiwm"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://src/scripts/states/player/run_state.gd" id="5_wr7my"]
 [ext_resource type="Script" path="res://src/scripts/states/player/jump_state.gd" id="6_xwnnx"]
 [ext_resource type="Script" path="res://src/scripts/states/player/fall_state.gd" id="7_tn4au"]
+[ext_resource type="Script" path="res://src/scripts/states/player/land_state.gd" id="9_dus2p"]
 [ext_resource type="PackedScene" uid="uid://btloge7heryw6" path="res://src/scenes/camera.tscn" id="9_en4ui"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qlnc"]
@@ -26,6 +27,30 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
 }
 
 [sub_resource type="Animation" id="Animation_s3ace"]
@@ -113,6 +138,46 @@ tracks/0/keys = {
 "values": [6, 7, 8, 9, 10, 11]
 }
 
+[sub_resource type="Animation" id="Animation_pf7wq"]
+resource_name = "land"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.27273, 0.8125), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(0, -2), Vector2(0, -5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mjo84"]
 _data = {
 "RESET": SubResource("Animation_xu3s6"),
@@ -120,6 +185,7 @@ _data = {
 "fall": SubResource("Animation_ibfeg"),
 "idle": SubResource("Animation_g865r"),
 "jump": SubResource("Animation_qefg8"),
+"land": SubResource("Animation_pf7wq"),
 "run": SubResource("Animation_2lnyt")
 }
 
@@ -131,6 +197,7 @@ acceleration = 600.0
 friction = 750.0
 jump_strength = 250.0
 fall_gravity = Vector2(0, 20)
+landing_velocity = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -5)
@@ -178,5 +245,13 @@ player = NodePath("../..")
 
 [node name="Death" type="Node" parent="StateMachine"]
 script = ExtResource("3_80xju")
+
+[node name="Land" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("9_dus2p")
+player = NodePath("../..")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 15)
+collision_mask = 8
 
 [node name="Camera2D" parent="." instance=ExtResource("9_en4ui")]

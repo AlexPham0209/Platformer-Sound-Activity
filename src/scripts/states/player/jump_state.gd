@@ -1,3 +1,4 @@
+class_name JumpState
 extends State
 
 @export var player : Player

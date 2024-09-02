@@ -52,8 +52,9 @@ tile_set = ExtResource("4_h0mck")
 collision_enabled = false
 
 [node name="Player" parent="." instance=ExtResource("4_3xrpv")]
-position = Vector2(39, 116)
+position = Vector2(47, 79)
 acceleration = 750.0
+landing_velocity = 250.0
 
 [node name="TopLeft" parent="Player/Camera2D" index="0"]
 position = Vector2(-231, -269)

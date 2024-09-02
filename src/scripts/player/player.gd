@@ -25,11 +25,14 @@ extends CharacterBody2D
 
 @export var jump_gravity = Vector2(0, 9.8)
 @export var fall_gravity = Vector2(0, 9.8 * 1.5)
+@export var landing_velocity : float = -50
 
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 
-func _physics_process(delta: float) -> void:
+@onready var ray_cast : RayCast2D = $RayCast2D
+
+func _physics_process(delta: float) -> void:		
 	#Handle sprite flipping
 	var direction = Input.get_axis("left", "right")
 	if direction:
@@ -46,4 +49,20 @@ func _physics_process(delta: float) -> void:
 	#Applying velocity and collision on player
 	move_and_slide()
 
+#Checks if the current tile the player is standing on is one way
+func on_one_way_tile() -> bool:
+	#Get the reference of what's colliding with the raycast and checks if its a tile map layer
+	var collider = ray_cast.get_collider()
 	
+	if collider is not TileMapLayer:
+		return false
+	
+	var tile_map : TileMapLayer = collider as TileMapLayer
+	
+	#Converts point where raycast intersects into a coordinate in the tile map
+	var point : Vector2 = ray_cast.get_collision_point()
+	var coord : Vector2 = tile_map.local_to_map(tile_map.to_local(point))
+	
+	#Fetches the data of the tile at the map coordinate and checks if 
+	var data : TileData = tile_map.get_cell_tile_data(coord)
+	return data.is_collision_polygon_one_way(0, 0)
