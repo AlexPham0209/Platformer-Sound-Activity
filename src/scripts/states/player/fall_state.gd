@@ -20,4 +20,3 @@ func physics_update(delta : float) -> void:
 			transition_to.emit("Land")
 		else: 
 			transition_to.emit("Idle" if player.velocity.x == 0 else "Run")
-	

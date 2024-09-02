@@ -63,6 +63,6 @@ func on_one_way_tile() -> bool:
 	var point : Vector2 = ray_cast.get_collision_point()
 	var coord : Vector2 = tile_map.local_to_map(tile_map.to_local(point))
 	
-	#Fetches the data of the tile at the map coordinate and checks if 
+	#Fetches the data of the tile at the map coordinate and checks if player is on one way tile
 	var data : TileData = tile_map.get_cell_tile_data(coord)
 	return data.is_collision_polygon_one_way(0, 0)
