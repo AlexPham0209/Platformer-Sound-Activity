@@ -19,7 +19,7 @@ func physics_update(delta : float) -> void:
 		transition_to.emit("Jump")
 		
 	#If player walked off the platform without jumping, transition to fall state
-	elif not player.is_on_floor():
+	elif player.coyote_jump_timer.is_stopped():
 		transition_to.emit("Fall")
 
 func input(event : InputEvent) -> void:

@@ -6,15 +6,18 @@ var dust : PackedScene = preload("res://src/scenes/particles/dust.tscn")
 
 func enter(param : Dictionary = {}) -> void:
 	player.animation_player.play("land")
-
+	
+	#Spawns dust at current location of the player
 	var instance : GPUParticles2D = dust.instantiate()
 	instance.global_position = player.global_position + Vector2(0, 10)
 	get_tree().current_scene.add_child(instance)
 	
+	#Wait until the land animation is finished before transitioning to either idle or run
 	await player.animation_player.animation_finished
 	transition_to.emit("Idle" if player.velocity.x == 0 else "Run")
 
 func physics_update(delta : float) -> void:
+	#Horizontal movement
 	var direction = Input.get_axis("left", "right")
 	player.velocity.x = move_toward(player.velocity.x, player.speed * direction, player.acceleration * delta)
 	
