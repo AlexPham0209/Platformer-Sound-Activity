@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://c23toejsoa3wb"]
+[gd_scene load_steps=7 format=4 uid="uid://c23toejsoa3wb"]
 
 [ext_resource type="Texture2D" uid="uid://d3inn0asxct2u" path="res://src/assets/sunnyland/World/Background/back.png" id="1_4cvb6"]
 [ext_resource type="Texture2D" uid="uid://bfy6bt02nkhhn" path="res://src/assets/sunnyland/World/Background/middle.png" id="2_teu4c"]
 [ext_resource type="Texture2D" uid="uid://dt4vwaoalnscf" path="res://src/assets/sunnyland/World/Props/tree-house.png" id="4_00yk7"]
 [ext_resource type="PackedScene" uid="uid://djg8314ex8y7c" path="res://src/scenes/player/player.tscn" id="4_3xrpv"]
 [ext_resource type="TileSet" uid="uid://dt4tg8sne4erd" path="res://src/tilesets/tiles.tres" id="4_h0mck"]
+[ext_resource type="Script" path="res://src/scripts/states/player/death_state.gd" id="6_q0qcw"]
 
 [node name="Game" type="Node2D"]
 
@@ -55,6 +56,9 @@ collision_enabled = false
 position = Vector2(47, 79)
 acceleration = 750.0
 landing_velocity = 300.0
+
+[node name="Death" parent="Player/StateMachine" index="4"]
+script = ExtResource("6_q0qcw")
 
 [node name="TopLeft" parent="Player/Camera2D" index="0"]
 position = Vector2(-239, -120)

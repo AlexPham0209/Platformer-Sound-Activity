@@ -2,9 +2,12 @@ class_name RunState
 extends State
 
 @export var player : Player
+@export var running_sound : AudioStreamPlayer
 
 func enter(param : Dictionary = {}) -> void:
 	player.animation_player.play("run")
+	if running_sound != null:
+		running_sound.play()
 	
 func physics_update(delta : float) -> void: 
 	var direction : float = Input.get_axis("left", "right")

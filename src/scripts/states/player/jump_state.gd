@@ -2,11 +2,15 @@ class_name JumpState
 extends State
 
 @export var player : Player
+@export var jumping_sound : AudioStreamPlayer
 
 #On enter, we set the current vertical velocity to -jump_strength
 func enter(param : Dictionary = {}) -> void:
 	player.velocity.y = -player.jump_strength
 	player.animation_player.play("jump")
+	
+	if jumping_sound != null:
+		jumping_sound.play()
 
 func physics_update(delta : float) -> void:
 	#Gravity while jumping is less than while falling

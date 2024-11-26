@@ -2,11 +2,15 @@ class_name LandState
 extends State
 
 @export var player : Player 
+@export var landing_sound : AudioStreamPlayer
 var dust : PackedScene = preload("res://src/scenes/particles/dust.tscn")
 
 func enter(param : Dictionary = {}) -> void:
 	player.animation_player.play("land")
 	
+	if landing_sound != null:
+		landing_sound.play()
+		
 	#Spawns dust at current location of the player
 	var instance : GPUParticles2D = dust.instantiate()
 	instance.global_position = player.global_position + Vector2(0, 10)

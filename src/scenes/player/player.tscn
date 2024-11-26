@@ -220,7 +220,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
-wait_time = 0.075
+wait_time = 0.05
 one_shot = true
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
@@ -235,9 +235,10 @@ player = NodePath("../..")
 script = ExtResource("5_wr7my")
 player = NodePath("../..")
 
-[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "jumping_sound")]
 script = ExtResource("6_xwnnx")
 player = NodePath("../..")
+jumping_sound = NodePath("../../Jumping")
 
 [node name="Fall" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
 script = ExtResource("7_tn4au")
@@ -246,9 +247,18 @@ player = NodePath("../..")
 [node name="Death" type="Node" parent="StateMachine"]
 script = ExtResource("3_80xju")
 
-[node name="Land" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+[node name="Land" type="Node" parent="StateMachine" node_paths=PackedStringArray("player", "landing_sound")]
 script = ExtResource("9_dus2p")
 player = NodePath("../..")
+landing_sound = NodePath("../../Landing")
+
+[node name="Running" type="AudioStreamPlayer" parent="."]
+
+[node name="Jumping" type="AudioStreamPlayer" parent="."]
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+
+[node name="Landing" type="AudioStreamPlayer" parent="."]
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 15)
