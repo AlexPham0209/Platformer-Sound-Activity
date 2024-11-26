@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://brp1crnbx26sy"]
+
+[ext_resource type="Texture2D" uid="uid://c0tjjfka4syjw" path="res://src/assets/sunnyland/Pickups/Gem/gem.png" id="1_gxdum"]
+[ext_resource type="Script" path="res://src/Scripts/gem.gd" id="1_oku80"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ed0sh"]
+radius = 7.07107
+
+[sub_resource type="Animation" id="Animation_hexp4"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_p3eec"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8dllk"]
+_data = {
+"RESET": SubResource("Animation_p3eec"),
+"idle": SubResource("Animation_hexp4")
+}
+
+[node name="Gem" type="Node2D"]
+script = ExtResource("1_oku80")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gxdum")
+hframes = 5
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ed0sh")
+
+[node name="Pickup" type="AudioStreamPlayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8dllk")
+}
+autoplay = "idle"
+speed_scale = 0.5
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
